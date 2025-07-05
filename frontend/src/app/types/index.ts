@@ -1,5 +1,6 @@
-src/app/types/index.ts
+
 export interface Buku {
+cover: string | Blob;
 id: number;
 judul: string;
 pengarang: string;
