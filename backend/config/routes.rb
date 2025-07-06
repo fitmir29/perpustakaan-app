@@ -1,29 +1,61 @@
 Rails.application.routes.draw do
-  # Autentikasi User dengan controller custom
-  devise_for :users, controllers: {
-    sessions: 'users/sessions',
-    registrations: 'users/registrations',
-    passwords: 'users/passwords'
-  }
+  # Konfigurasi CORS
+  match '*path', to: 'application#handle_options_request', via: :options
 
-  # Autentikasi Admin dengan controller custom
-  devise_for :admins, controllers: {
-    sessions: 'admins/sessions',
-    registrations: 'admins/registrations',
-    passwords: 'admins/passwords'
-  }
+  # Devise route user
+  devise_for :users,
+    path: 'api/user',
+    defaults: { format: :json },
+    controllers: {
+      sessions: 'users/sessions',
+      registrations: 'users/registrations',
+      passwords: 'users/passwords'
+    },
+    path_names: {
+      sign_in: 'sign_in',
+      sign_out: 'sign_out',
+      registration: 'register'
+    }
 
-  # Cek status aplikasi
-  get "up" => "rails/health#show", as: :rails_health_check
+  # Devise route admin
+  devise_for :admins,
+    path: 'api/admin',
+    defaults: { format: :json },
+    controllers: {
+      sessions: 'admins/sessions',
+      registrations: 'admins/registrations',
+      passwords: 'admins/passwords'
+    },
+    path_names: {
+      sign_in: 'sign_in',
+      sign_out: 'sign_out',
+      registration: 'register'
+    }
 
-  # API routes
-  namespace :api do
+  # API v1 routes
+  namespace :api, defaults: { format: :json } do
     namespace :v1 do
-      resources :buku
-      resources :peminjaman
+      resources :buku do
+        collection do
+          get :search
+        end
+      end
+
+      resources :peminjaman do
+        member do
+          post :kembalikan
+        end
+      end
+
       resources :pengembalian
     end
   end
 
-  # root "posts#index" # aktifkan jika ada halaman utama
+  # health check
+  get "up" => "rails/health#show", as: :rails_health_check
+
+  # handle options method
+  def handle_options_request
+    head :no_content
+  end
 end

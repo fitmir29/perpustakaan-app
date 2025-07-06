@@ -2,6 +2,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { isAuthenticated } from 'src/app/lib/auth';
 import BukuCard from 'src/components/bukucard';
 import ProtectedRoute from 'src/components/protectedroute';
@@ -22,8 +23,15 @@ interface Buku {
 export default function BukuPage() {
   const [bukuList, setBukuList] = useState<Buku[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
+    if (!isAuthenticated()) {
+      router.push('/user/login');
+      return;
+    }
+
+    // Simulasi fetch data buku
     setTimeout(() => {
       setBukuList([
         {
@@ -73,22 +81,11 @@ export default function BukuPage() {
           tahunTerbit: 2009,
           tahun: 2009,
           cover: '/covers/negeri-5-menara.jpg',
-        }
+        },
       ]);
       setIsLoading(false);
     }, 1000);
   }, []);
-
-  if (!isAuthenticated()) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Mengarahkan ke halaman login...</p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <ProtectedRoute>
@@ -113,9 +110,7 @@ export default function BukuPage() {
                 </svg>
               </div>
               <h3 className="text-lg font-medium text-gray-900 mb-2">Buku tidak ditemukan</h3>
-              <p className="text-gray-600">
-                Maaf, tidak ada buku yang tersedia saat ini.
-              </p>
+              <p className="text-gray-600">Maaf, tidak ada buku yang tersedia saat ini.</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -129,5 +124,3 @@ export default function BukuPage() {
     </ProtectedRoute>
   );
 }
-
-/* removed duplicate setIsLoading definition */
