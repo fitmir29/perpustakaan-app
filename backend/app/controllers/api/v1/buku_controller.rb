@@ -20,17 +20,19 @@ module Api::V1
     end
 
     def update
-      if @buku.update(buku_params)
-        render json: @buku
-      else
-        render json: { errors: @buku.errors.full_messages }, status: :unprocessable_entity
-      end
-    end
+  buku = Buku.find(params[:id])
+  if buku.update(buku_params)
+    render json: buku
+  else
+    render json: { error: 'Gagal update' }, status: :unprocessable_entity
+  end
+end
 
-    def destroy
-      @buku.destroy
-      head :no_content
-    end
+def destroy
+  buku = Buku.find(params[:id])
+  buku.destroy
+  head :no_content
+end
 
     private
 
