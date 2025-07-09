@@ -1,4 +1,3 @@
-# app/controllers/api/v1/buku_controller.rb
 module Api::V1
   class BukuController < ApplicationController
     before_action :set_buku, only: [:show, :update, :destroy]

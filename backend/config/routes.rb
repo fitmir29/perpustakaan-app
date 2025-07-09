@@ -35,8 +35,8 @@ Rails.application.routes.draw do
   # API v1 routes
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
-      resources :buku do
-        collection do
+         resources :buku, only: [:index, :create]  do
+         collection do
           get :search
         end
       end
