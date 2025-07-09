@@ -10,9 +10,7 @@ return (
 Dashboard Admin
 </h1>
 
-php-template
-Copy
-Edit
+
     <p className="text-gray-700 text-center mb-6">
       Selamat datang, Admin. Gunakan menu berikut untuk mengelola data perpustakaan.
     </p>

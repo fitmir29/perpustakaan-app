@@ -1,7 +1,7 @@
-class AddFieldsToUsers < ActiveRecord::Migration[8.0]
+class AddFieldsToUsers < ActiveRecord::Migration[6.1]
   def change
-    add_column :users, :username, :string
-    add_column :users, :nama, :string
-    add_column :users, :role, :string
+    # Kolom sudah ada, jadi tidak perlu ditambahkan lagi
+    # add_column :users, :username, :string
+    # add_column :users, :email, :string
   end
 end
