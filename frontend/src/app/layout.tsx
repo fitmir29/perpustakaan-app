@@ -1,7 +1,7 @@
 import './globals.css';
 import { Inter } from 'next/font/google';
 import { ReactNode } from 'react';
-import Navbar from '@/components/navbar'; // pastikan kapital (macOS case-insensitive, Linux case-sensitive)
+import Navbar from 'src/components/navbar';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -20,11 +20,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <meta name="description" content={metadata.description} />
       </head>
       <body className={`${inter.className} bg-gray-50 text-gray-800`}>
-        {/* 
-          Tampilkan Navbar hanya jika path tidak mengandung "/login"
-          Next.js tidak punya window.location saat SSR, jadi bisa dihandle lewat CSS
-          atau nanti Middleware, untuk sekarang lebih simpel: tetap ditampilkan
-        */}
         <Navbar />
         <main className="container mx-auto px-4 py-6">{children}</main>
       </body>

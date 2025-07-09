@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Api::Admins::SessionsController < Devise::SessionsController
+class Api::Admin::SessionsController < Devise::SessionsController
   respond_to :json
 
   # POST /admins/sign_in

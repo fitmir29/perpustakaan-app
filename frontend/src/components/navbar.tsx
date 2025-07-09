@@ -26,7 +26,7 @@ const Navbar = () => {
           <Link href="/user/dashboard" className={linkClass('/user/dashboard')}>
             Dashboard
           </Link>
-          <Link href="/user/login" className={linkClass('/user/login')}>
+          <Link href="/login" className={linkClass('/login')}>
             Login User
           </Link>
           <Link href="/admin/login" className={linkClass('/admin/login')}>
