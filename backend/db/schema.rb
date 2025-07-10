@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_06_055911) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_10_003945) do
   create_table "admins", force: :cascade do |t|
     t.string "username", default: "", null: false
     t.string "nama", default: "", null: false
@@ -37,15 +37,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_06_055911) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "peminjamen", force: :cascade do |t|
+  create_table "peminjaman", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "buku_id", null: false
     t.date "tanggal_pinjam"
-    t.string "status"
+    t.date "tanggal_kembali"
+    t.string "status", default: "dipinjam"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["buku_id"], name: "index_peminjamen_on_buku_id"
-    t.index ["user_id"], name: "index_peminjamen_on_user_id"
+    t.index ["buku_id"], name: "index_peminjaman_on_buku_id"
+    t.index ["user_id"], name: "index_peminjaman_on_user_id"
   end
 
   create_table "pengembalians", force: :cascade do |t|
@@ -68,12 +69,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_06_055911) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "name"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
-  add_foreign_key "peminjamen", "bukus"
-  add_foreign_key "peminjamen", "users"
-  add_foreign_key "pengembalians", "peminjamen"
+  add_foreign_key "peminjaman", "bukus"
+  add_foreign_key "peminjaman", "users"
+  add_foreign_key "pengembalians", "peminjaman"
 end
