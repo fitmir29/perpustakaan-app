@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   # Devise route user
   devise_for :users,
-    path: 'api/user',
+    path: 'api/users',
     defaults: { format: :json },
     controllers: {
       sessions: 'users/sessions',
@@ -33,13 +33,26 @@ Rails.application.routes.draw do
     }
 
   # API v1 routes
-  namespace :api, defaults: { format: :json } do
+
+  namespace :api do
+  namespace :v1 do
+    resources :buku, only: [:index, :show, :create, :update, :destroy]
+  end
+end
+
+  namespace :api do
+  namespace :v1 do
+    resources :users, only: [:index, :create, :show, :update, :destroy]
+  end
+end
+
+  namespace :api do
     namespace :v1 do
-         resources :buku, only: [:index, :create, :update, :destroy]  do
-         collection do
-          get :search
-        end
-      end
+        resources :peminjaman, only: [:index, :create, :update, :destroy] do
+  member do
+    post :kembalikan
+  end
+end
 
       resources :peminjaman do
         member do
